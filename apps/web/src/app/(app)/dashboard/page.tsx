@@ -845,7 +845,12 @@ export default function DashboardPage() {
   // ── Auto-refresh when OAuth popup signals success ──────────────────────────
   // The callback page posts PVOT_ACCOUNT_CONNECTED then closes itself.
   // The storage event fires as fallback for browsers that block postMessage.
+  // On first mount we also force a rehydrate in case we arrived via full redirect.
   useEffect(() => {
+    // Force rehydrate on mount — handles full-page redirect flow where
+    // the store may not have hydrated before this component rendered.
+    useAuthStore.persist.rehydrate?.();
+
     const onMessage = (e: MessageEvent) => {
       if (e.origin !== window.location.origin) return;
       if (e.data?.type === 'PVOT_ACCOUNT_CONNECTED') {
