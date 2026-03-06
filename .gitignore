@@ -1,1 +1,36 @@
-node_modules
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Next.js build output — never commit this
+.next/
+out/
+
+# Turbo cache
+.turbo/
+
+# Build outputs
+dist/
+
+# Environment files — NEVER commit secrets
+.env
+.env.local
+.env.*.local
+
+# macOS junk
+.DS_Store
+**/.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Large dump files
+*.zip
+pvot_full_dump.txt
+pvot_dashboard*.html
+pvot_executive_vision.html
+pvot_settings_visionnew.html
