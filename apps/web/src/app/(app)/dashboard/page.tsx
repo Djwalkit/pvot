@@ -776,6 +776,9 @@ function EmptyState({ onConnect, isConnecting }: { onConnect: () => void; isConn
 // ─── DASHBOARD PAGE ───────────────────────────────────────────────────────────
 
 export default function DashboardPage() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   const accounts  = useAuthStore(s => s.accounts);
   const conflicts = usePVOTStore(s => s.conflicts);
   const dismissed = usePVOTStore(s => s.dismissedConflicts);
@@ -784,6 +787,9 @@ export default function DashboardPage() {
   const setViewDate    = usePVOTStore(s => s.setViewDate);
 
   const { lanes, refetchAll, timezone, homeZones } = useLaneQuery();
+
+  // Prevent server/client hydration mismatch — Zustand persist only runs client-side
+  if (!mounted) return null;
   const { connect: connectAccount, isConnecting, error: connectError } = useConnectAccount();
 
   const [selectedMeeting, setSelectedMeeting] = useState<(Meeting & { accountId?: string }) | null>(null);
